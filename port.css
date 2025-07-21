@@ -94,3 +94,89 @@ body {
       color: white;
       font-size: 1.3rem;
     }
+ .cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 35px;
+  height: 35px;
+  border: 2px solid rgba(13, 202, 240, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #0dcaf0;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: background-color 0.3s;
+}
+
+/* On Hover */
+.cursor-hover {
+  transform: translate(-50%, -50%) scale(2.3);
+  box-shadow: 0 0 12px rgba(13, 202, 240, 0.5);
+  border-color: rgba(13, 202, 240, 0.6);
+}
+
+/* Ripple Click */
+.cursor-ring.clicked {
+  animation: ripple 0.4s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Hide on touch devices */
+@media (pointer: coarse) {
+  .cursor-dot, .cursor-ring {
+    display: none;
+  }
+}
+
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::after {
+  content: "";
+  position: absolute;
+  background: rgba(13, 202, 240, 0.4); /* Bootstrap info color ripple */
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 1;
+  pointer-events: none;
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+section.highlighted {
+  background-color: #f0f8ff; /* Light background when in view */
+  transition: background-color 0.4s ease-in-out;
+}

@@ -194,7 +194,71 @@
         : '<i class="bi bi-sun-fill"></i>';
     });
 
-          
   </script>
+
+<div class="cursor-ring"></div>
+<div class="cursor-dot"></div>
+
+<script>
+  const ring = document.querySelector(".cursor-ring");
+  const dot = document.querySelector(".cursor-dot");
+
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.left = `${mouseX}px`;
+    dot.style.top = `${mouseY}px`;
+  });
+
+  function animate() {
+    ringX += (mouseX - ringX) * 0.15;
+    ringY += (mouseY - ringY) * 0.15;
+    ring.style.left = `${ringX}px`;
+    ring.style.top = `${ringY}px`;
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // Hover effects
+  document.querySelectorAll("a, button, .btn, input, textarea, .card").forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+      ring.classList.add("cursor-hover");
+    });
+    el.addEventListener("mouseleave", () => {
+      ring.classList.remove("cursor-hover");
+    });
+  });
+
+  // Click ripple
+  document.addEventListener("mousedown", () => {
+    ring.classList.add("clicked");
+  });
+  document.addEventListener("mouseup", () => {
+    setTimeout(() => ring.classList.remove("clicked"), 300);
+  });
+</script>
+
+<script>
+  // Add ripple on tap or click
+  document.querySelectorAll('button, a').forEach(el => {
+    el.classList.add('ripple-effect');
+
+    el.addEventListener('click', function(e) {
+      const circle = document.createElement("span");
+      circle.classList.add("ripple-effect");
+      const rect = el.getBoundingClientRect();
+      circle.style.left = `${e.clientX - rect.left}px`;
+      circle.style.top = `${e.clientY - rect.top}px`;
+      this.appendChild(circle);
+      setTimeout(() => circle.remove(), 600);
+    });
+  });
+</script>
+
+
+
 </body>
 </html>
